@@ -13,7 +13,7 @@ class AuthenticationTest {
     Authentication authentication = spy();
     when(authentication.getPermissions()).thenReturn(List.of(new FullAccess()));
 
-    assertTrue(authentication.hasPermission(Permission.class));
+    assertTrue(authentication.hasPermission(Permission.class), "Should have permission");
   }
 
   @Test
@@ -21,7 +21,7 @@ class AuthenticationTest {
     Authentication authentication = spy();
     when(authentication.getPermissions()).thenReturn(List.of(new PermissionA())).getMock();
 
-    assertTrue(authentication.hasPermission(PermissionA.class));
+    assertTrue(authentication.hasPermission(PermissionA.class), "Should have permission");
   }
 
   @Test
@@ -33,7 +33,7 @@ class AuthenticationTest {
 
     when(authentication.getPermissions()).thenReturn(List.of(permissionA));
 
-    assertFalse(authentication.hasPermission(permissionB.getClass()));
+    assertFalse(authentication.hasPermission(permissionB.getClass()), "Should not have permission");
   }
 
   @Test
@@ -79,14 +79,14 @@ class AuthenticationTest {
         "Wrong permission");
   }
 
-  private static class PermissionA implements Permission {
+  private static final class PermissionA implements Permission {
     @Override
     public String getType() {
       return "A";
     }
   }
 
-  private static class PermissionB implements Permission {
+  private static final class PermissionB implements Permission {
     @Override
     public String getType() {
       return "B";
